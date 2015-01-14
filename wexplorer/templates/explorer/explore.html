@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+<h1>Explore the W-Drive!</h1>
+
+<div class="row">
+  {% for name in names %}
+  <div class="col-md-6">
+    {{ name.name }}
+  </div>
+  <div class="col-md-6">
+    {{ name.description }}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
