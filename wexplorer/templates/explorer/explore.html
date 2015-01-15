@@ -17,10 +17,10 @@
 <div class="row">
   {% for name in names %}
   <div class="col-md-6">
-    {{ name.name }}
+    <a href="{{ url_for('explorer.explore_companies', company_id=name.company_id) }}">{{ name.name }}</a>
   </div>
   <div class="col-md-6">
-    {{ name.description }}
+    <a href="{{ url_for('explorer.explore_contracts', contract_id=name.contract_id) }}">{{ name.description }}</a>
   </div>
   {% endfor %}
 </div>

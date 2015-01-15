@@ -37,6 +37,8 @@ def explore_search():
 
     for company in companies:
         results.append({
+            'company_id': company.company_id,
+            'contract_id': company.contracts[0].contracts_id,
             'name': company.company,
             'description': company.contracts[0].description
     })
@@ -62,8 +64,10 @@ def explore_companies(company_id):
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
 def explore_contracts(contract_id):
 
-    contract = Contract.query.get(contract_id)
+    company = Company.query.join(Contract).filter(
+        Contract.contracts_id == contract_id
+    ).first()
 
     return render_template(
-        'explorer/contracts.html', contract=contract
+        'explorer/contracts.html', company=company
     )

@@ -2,6 +2,36 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<pre>{{ contract.spec_number }}</pre>
+<h3 class="text-center">Contract for {{ company.contracts[0].description }}</h3>
+<h5 class="text-center">Awarded to <a href="{{ url_for('explorer.explore_companies', company_id=company.company_id) }}">{{ company.company }}</a></h5>
+
+<div class="row">
+  <div class="col-md-6">
+    <p class="lead">
+      Contract Identification
+    </p>
+    <ul>
+      {% if company.contracts[0].contract_number is not none %}
+      <li><strong>Contract Number: </strong>{{ company.contracts[0].contract_number }}</li>
+      {% endif %}
+      {% if company.contracts[0].controller_number is not none %}
+      <li><strong>Controller Number: </strong>{{ company.contracts[0].controller_number }}</li>
+      {% endif %}
+      {% if company.contracts[0].spec_number is not none %}
+      <li><strong>Spec Number: </strong>{{ company.contracts[0].spec_number }}</li>
+      {% endif %}
+      {% if company.contracts[0].commcode is not none %}
+      <li><strong>Commcode: </strong>{{ company.contracts[0].commcode }}</li>
+      {% endif %}
+      {% if company.contracts[0].expiration is not none %}
+      <li><strong>Expiration: </strong>{{ company.contracts[0].expiration.strftime('%Y-%m-%d') }}</li>
+      {% endif %}
+      {% if company.contracts[0].notes is not none %}
+      <li><strong>Notes: </strong>{{ company.contracts[0].notes }}</li>
+      {% endif %}
+
+    </ul>
+  </div>
+</div>
 
 {% endblock %}
