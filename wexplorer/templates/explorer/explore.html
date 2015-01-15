@@ -4,6 +4,16 @@
 
 <h1>Explore the W-Drive!</h1>
 
+<div class="row text-center">
+  <form id="search-box" method="GET" class="form form-inline" action="/explore/" role="login">
+    <div class="form-group">
+      {{ form.q(placeholder="I'm looking for...", class_="form-control") }}
+    </div>
+    <input class="btn btn-default btn-success" type="submit" value="Search">
+  </form>
+</div>
+
+{% if names %}
 <div class="row">
   {% for name in names %}
   <div class="col-md-6">
@@ -14,4 +24,9 @@
   </div>
   {% endfor %}
 </div>
+{% elif names is none %}
+<div class="row text-center">
+  <h4>There are no results!</h4>
+</div>
+{% endif %}
 {% endblock %}
