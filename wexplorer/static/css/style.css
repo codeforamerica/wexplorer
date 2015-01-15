@@ -25,7 +25,25 @@ textarea {
   max-width: 700px;
 }
 
+/* navbar */
+
+.navbar-header {
+    background-color: #4F628E;
+    border-color: #E7E7E7;
+
+}
+.navbar-inverse
+.navbar-brand {
+    color: #7887AB;
+}
+
+/* Body */
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 /* Forms */
+
 
 .navbar-form input[type="text"],
 .navbar-form input[type="password"] {
