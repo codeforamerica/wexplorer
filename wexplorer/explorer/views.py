@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template
+from flask import (
+    Blueprint,
+    render_template,
+    request
+)
+
 from wexplorer.database import db
 from wexplorer.explorer.models import (
     Company,
@@ -7,12 +12,17 @@ from wexplorer.explorer.models import (
     Contract
 )
 
+from wexplorer.explorer.forms import SearchBox
+
 blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
 
-@blueprint.route('/')
+@blueprint.route('/', methods=['GET', 'POST'])
 def explore_search():
-    pass
+    form = SearchBox(request.form)
+    if request.method == 'POST':
+        pass
+    return render_template('explorer/explore_search.html', form=form)
 
 @blueprint.route('/results')
 def explore_results():
