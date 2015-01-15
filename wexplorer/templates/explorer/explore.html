@@ -2,9 +2,8 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h1>Explore the W-Drive!</h1>
-
 <div class="row text-center">
+  <h1>Explore the W-Drive!</h1>
   <form id="search-box" method="GET" class="form form-inline" action="/explore/" role="login">
     <div class="form-group">
       {{ form.q(placeholder="I'm looking for...", class_="form-control") }}
