@@ -13,8 +13,8 @@ class Company(Model):
     company_id = Column(db.Integer, primary_key=True)
     company = Column(db.String(255))
     bus_type = Column(db.String(255))
-    company_contacts = db.relationship('CompanyContact', backref='company', lazy='dynamic')
-    contracts = db.relationship('Contract', backref='company', lazy='dynamic')
+    company_contacts = db.relationship('CompanyContact', backref='company', lazy='select')
+    contracts = db.relationship('Contract', backref='company', lazy='select')
 
 class CompanyContact(Model):
     __tablename__ = 'company_contact'
