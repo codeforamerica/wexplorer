@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from flask.ext.assets import Bundle, Environment
 
-css = Bundle(
-    "libs/bootstrap/dist/css/bootstrap.css",
-    "css/style.css",
-    filters="cssmin",
+less = Bundle(
+	"less/*.less",
+    "less/**/*.less",
+    filters="less",
     output="public/css/common.css"
 )
 
@@ -19,4 +19,4 @@ js = Bundle(
 assets = Environment()
 
 assets.register("js_all", js)
-assets.register("css_all", css)
+assets.register("css_all", less)

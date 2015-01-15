@@ -42,3 +42,8 @@ output/*/index.html
 docs/_build
 
 .webassets-cache
+
+# JS and CSS
+node_modules
+*.css 
+

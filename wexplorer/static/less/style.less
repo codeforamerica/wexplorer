@@ -1,7 +1,7 @@
 /* =============================================================================
    App specific CSS file.
    ========================================================================== */
-
+@import "variables.less";
 /* universal */
 
 html {
@@ -28,13 +28,13 @@ textarea {
 /* navbar */
 
 .navbar-header {
-    background-color: #4F628E;
+    background-color: #000000;
     border-color: #E7E7E7;
 
 }
 .navbar-inverse
 .navbar-brand {
-    color: #7887AB;
+    color: @brand-primary;
 }
 
 /* Body */
@@ -68,6 +68,10 @@ body {
 /* footer */
 
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
