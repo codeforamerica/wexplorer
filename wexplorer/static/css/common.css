@@ -6269,6 +6269,18 @@ textarea {
   margin: 0 auto;
   max-width: 700px;
 }
+h1 {
+  font-size: 70px;
+  font-weight: 900;
+}
+h2 {
+  font-size: 30px;
+  font-weight: 200;
+}
+h3 {
+  font-size: 24px;
+  color: #777777;
+}
 /* navbar */
 .navbar-header {
   background-color: #000000;
@@ -6279,7 +6291,7 @@ textarea {
 }
 /* Body */
 body {
-  font-family: "PT Sans" sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 /* Forms */
 .navbar-form input[type="text"],

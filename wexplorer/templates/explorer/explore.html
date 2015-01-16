@@ -3,7 +3,12 @@
 {% block content %}
 
 <div class="row text-center">
-  <h1>Explore the W-Drive!</h1>
+  {% if not names %}
+  <h1>Wexplorer</h1>
+  <h2>helps you find goods and services</h2>
+  <h2 class="text-muted">for the lowest price</h2>
+  {% endif %}  
+
   <form id="search-box" method="GET" class="form form-inline" action="/explore/" role="login">
     <div class="form-group">
       {{ form.q(placeholder="I'm looking for...", class_="form-control") }}
