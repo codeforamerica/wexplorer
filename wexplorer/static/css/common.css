@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -881,7 +882,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "PT Sans" sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -6185,89 +6186,6 @@ textarea {
 }
 /* navbar */
 .navbar-header {
-  background-color: #FFFFFF;
-  border-color: #E7E7E7;
-}
-.navbar-inverse .navbar-brand {
-  color: #00ff00;
-}
-/* Body */
-body {
-  font-family: 'Open Sans', sans-serif;
-}
-/* Forms */
-.navbar-form input[type="text"],
-.navbar-form input[type="password"] {
-  width: 180px;
-}
-.form-register {
-  width: 50%;
-}
-.form-register .form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-/* footer */
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #999999;
-}
-footer a {
-  color: #999999;
-}
-footer p {
-  float: right;
-  margin-right: 25px;
-}
-footer ul {
-  list-style: none;
-}
-footer ul li {
-  float: left;
-  margin-left: 10px;
-}
-footer .company {
-  float: left;
-  margin-left: 25px;
-}
-footer .footer-nav {
-  float: right;
-  margin-right: 25px;
-  list-style: none;
-}
-html {
-  background-color: #ffffff;
-}
-
-/* =============================================================================
-   App specific CSS file.
-   ========================================================================== */
-/* universal */
-html {
-  overflow-y: scroll;
-}
-body {
-  padding-top: 60px;
-}
-section {
-  overflow: auto;
-}
-textarea {
-  resize: vertical;
-}
-.container-narrow {
-  margin: 0 auto;
-  max-width: 700px;
-}
-/* navbar */
-.navbar-header {
   background-color: #000000;
   border-color: #E7E7E7;
 }
@@ -6276,7 +6194,7 @@ textarea {
 }
 /* Body */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "PT Sans" sans-serif;
 }
 /* Forms */
 .navbar-form input[type="text"],
@@ -6330,3 +6248,90 @@ footer .footer-nav {
   list-style: none;
 }
 
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
+/* =============================================================================
+   App specific CSS file.
+   ========================================================================== */
+/* universal */
+html {
+  overflow-y: scroll;
+}
+body {
+  padding-top: 60px;
+}
+section {
+  overflow: auto;
+}
+textarea {
+  resize: vertical;
+}
+.container-narrow {
+  margin: 0 auto;
+  max-width: 700px;
+}
+/* navbar */
+.navbar-header {
+  background-color: #000000;
+  border-color: #E7E7E7;
+}
+.navbar-inverse .navbar-brand {
+  color: #00ff00;
+}
+/* Body */
+body {
+  font-family: "PT Sans" sans-serif;
+}
+/* Forms */
+.navbar-form input[type="text"],
+.navbar-form input[type="password"] {
+  width: 180px;
+}
+.form-register {
+  width: 50%;
+}
+.form-register .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999999;
+  background: #FFFFFF;
+}
+footer a {
+  color: #999999;
+}
+footer p {
+  float: right;
+  margin-right: 25px;
+}
+footer ul {
+  list-style: none;
+}
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+footer .company {
+  float: left;
+  margin-left: 25px;
+}
+footer .footer-nav {
+  float: right;
+  margin-right: 25px;
+  list-style: none;
+}
+
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
