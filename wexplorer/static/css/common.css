@@ -6279,7 +6279,7 @@ h2 {
 }
 h3 {
   font-size: 24px;
-  color: #777777;
+  color: #39b54a;
 }
 /* navbar */
 .navbar-header {
@@ -6287,7 +6287,7 @@ h3 {
   border-color: #E7E7E7;
 }
 .navbar-inverse .navbar-brand {
-  color: #00ff00;
+  color: #39b54a;
 }
 /* Body */
 body {
