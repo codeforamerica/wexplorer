@@ -1,10 +1,10 @@
 (function($, window) {
   var t = document.getElementById('js-cycle-phrases');
   var phrases = [
-    'for the lowest price',
-    'covered by existing contracts',
-    'from local vendors',
-    'requiring the least paperwork',
+    'for the lowest price.',
+    'covered by existing contracts.',
+    'from local vendors.',
+    'requiring the least paperwork.',
   ];
   var count = 1;
   if (t) {

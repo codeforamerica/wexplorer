@@ -2,11 +2,33 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="body-content">
-    <div class="row">
-      <h1>About</h1>
-      <p>Explore the W-Drive!</p>
+
+<div class="row">
+  <div class="col-md-3">
+    {% include "explorer/side_search.html" %}
+  </div>
+
+  <div class="col-md-9">
+    <div class="body-content">
+      <div class="row">
+        <h3>About</h3>
+        <p>
+          W:/Explorer (or just wexplorer) is Team Pittsburgh's digitization effort of a list of City of Pittsburgh contracts that started out as an Excel spreadsheet on the City's shared W-Drive.
+        </p>
+
+        <h4>Current Features</h4>
+        <ul>
+          <li>Quick search of company names & contract descriptions</li>
+          <li>Contract & company pages with more information about contracts/companies/contacts</li>
+        </ul>
+        <h4>Planned & In Development Features</h4>
+        <ul>
+          <li>Crowdsourced metadata about contracts</li>
+        </ul>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 
