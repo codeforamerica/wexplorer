@@ -49,15 +49,7 @@
       <div class="col-md-6">
         <p class="lead">What have we bought here previously?</p>
 
-        <ul class="list-unstyled">
-          {% if company.purchased_items %}
-          {% for item in company.purchased_items %}
-          <li>{{ item.item }}</li>
-          {% endfor %}
-          {% else %}
-          <li>Nothing here.</li>
-          {% endif %}
-        </ul>
+        {% include "explorer/items.html" %}
 
         <p class="lead">What else have we bought?</p>
         <form name="iform" method="POST" class="form" action="/explore/companies/{{ company.company_id }}/save">

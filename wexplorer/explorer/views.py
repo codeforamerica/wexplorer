@@ -42,7 +42,7 @@ def explore_search():
             'contract_id': company.contracts[0].contracts_id,
             'name': company.company,
             'description': company.contracts[0].description
-    })
+        })
 
     if len(results) == 0:
         results = None
@@ -62,16 +62,25 @@ def save_item(company_id):
     return redirect(url_for('explorer.explore_companies', company_id=company_id))
 
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
-def explore_companies(company_id):
+def explore_companies(company_id, page=1):
 
     iform = NewItemBox()
+    page = int(request.args.get('page', 1))
 
     company = Company.query.join(CompanyContact).filter(
         Company.company_id == company_id
     ).first()
 
+    purchases = PurchasedItems.query.filter(
+        PurchasedItems.company_id == company_id
+    ).paginate(page, 5, False)
+
     return render_template(
-        'explorer/companies.html', company=company, form=SearchBox(), iform=iform
+        'explorer/companies.html',
+        company=company,
+        form=SearchBox(),
+        iform=iform,
+        purchases=purchases,
     )
 
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
@@ -83,5 +92,7 @@ def explore_contracts(contract_id):
     ).first()
 
     return render_template(
-        'explorer/contracts.html', company=company, form=form
+        'explorer/contracts.html',
+        company=company,
+        form=form
     )
