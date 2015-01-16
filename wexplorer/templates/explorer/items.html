@@ -1,0 +1,29 @@
+{% if purchases.items %}
+<table class="table table-condensed table-five-items">
+  <thead>
+    <tr><th>Item</th></th>
+  </thead>
+  <tbody>
+    {% for item in purchases.items %}
+    <tr><td>{{ item.item }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nothing here.</p>
+{% endif %}
+
+{% if purchases.pages > 1 %}
+<ul class="pagination no-margin-pagination">
+  {% if purchases.has_prev %}
+  <li><a href="{{ url_for('explorer.explore_companies', company_id=company.company_id, page=purchases.prev_num) }}">See previous</a></li>
+  {% else %}
+  <li class="disabled"><a href="">See previous</a></li>
+  {% endif %}
+  {% if purchases.has_next %}
+  <li><a href="{{ url_for('explorer.explore_companies', company_id=company.company_id, page=purchases.next_num) }}">See more</a></li>
+  {% else %}
+  <li class="disabled"><a href="">See more</a></li>
+  {% endif %}
+</ul>
+{% endif %}

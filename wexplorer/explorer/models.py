@@ -13,9 +13,9 @@ class Company(Model):
     company_id = Column(db.Integer, primary_key=True)
     company = Column(db.String(255))
     bus_type = Column(db.String(255))
-    company_contacts = db.relationship('CompanyContact', backref='company', lazy='select')
-    contracts = db.relationship('Contract', backref='company', lazy='select')
-    purchased_items = db.relationship('PurchasedItems', backref='company', lazy='select')
+    company_contacts = db.relationship('CompanyContact', backref='company', lazy='joined')
+    contracts = db.relationship('Contract', backref='company', lazy='joined')
+    purchased_items = db.relationship('PurchasedItems', backref='company', lazy='joined')
 
 class CompanyContact(Model):
     __tablename__ = 'company_contact'
