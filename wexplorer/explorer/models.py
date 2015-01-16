@@ -13,8 +13,9 @@ class Company(Model):
     company_id = Column(db.Integer, primary_key=True)
     company = Column(db.String(255))
     bus_type = Column(db.String(255))
-    company_contacts = db.relationship('CompanyContact', backref='company', lazy='dynamic')
-    contracts = db.relationship('Contract', backref='company', lazy='dynamic')
+    company_contacts = db.relationship('CompanyContact', backref='company', lazy='select')
+    contracts = db.relationship('Contract', backref='company', lazy='select')
+    purchased_items = db.relationship('PurchasedItems', backref='company', lazy='select')
 
 class CompanyContact(Model):
     __tablename__ = 'company_contact'
@@ -24,6 +25,7 @@ class CompanyContact(Model):
     address_1 = Column(db.String(255))
     address_2 = Column(db.String(255))
     phone_number = Column(db.String(255))
+    fax_number = Column(db.String(255))
     email = Column(db.String(255))
     fin = Column(db.String(255))
     # company_id = Column(db.Integer)
@@ -46,3 +48,13 @@ class Contract(Model):
     # company_id = Column(db.Integer)
     company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
 
+class PurchasedItems(Model):
+    __tablename__ = 'company_purchases'
+
+    purchase_id = Column(db.Integer, primary_key=True)
+    item = Column(db.Text)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
+
+    def __init__(self, item, company_id):
+        self.item = item
+        self.company_id = company_id

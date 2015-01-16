@@ -1,7 +1,7 @@
-/* =============================================================================
+/* ======================================================================
    App specific CSS file.
-   ========================================================================== */
-
+   =================================================================== */
+@import "variables.less";
 /* universal */
 
 html {
@@ -25,7 +25,41 @@ textarea {
   max-width: 700px;
 }
 
+ h1 {
+  font-size: @font-size-h1;
+  font-weight: 900;
+ }
+
+ h2 {
+  font-size: @font-size-h2;
+  font-weight: 200;
+ }
+
+ h3 {
+  font-size: @font-size-h3;
+  color: @brand-primary;
+ }
+
+/* navbar */
+
+.navbar-header {
+    background-color: #000000;
+    border-color: #E7E7E7;
+
+}
+.navbar-inverse
+.navbar-brand {
+    color: @brand-primary;
+}
+
+/* Body */
+
+body {
+  font-family: @font-family-sans-serif;
+}
+
 /* Forms */
+
 
 .navbar-form input[type="text"],
 .navbar-form input[type="password"] {
@@ -47,17 +81,24 @@ textarea {
           box-sizing: border-box;
 }
 
+
+
+
 /* footer */
 
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #999999;
+  background: @body-bg;
 }
 
 footer a {
-  color: #999999;
+  color: @link-color;
 }
 
 footer p {

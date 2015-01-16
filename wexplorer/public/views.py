@@ -9,7 +9,7 @@ blueprint = Blueprint('public', __name__, static_folder="../static")
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
-    return render_template('public/home.html')
+    return redirect(url_for('explorer.explore_search'))
 
 @blueprint.route("/about")
 def about():

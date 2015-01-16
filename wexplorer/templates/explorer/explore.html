@@ -2,27 +2,35 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h1>Explore the W-Drive!</h1>
-
-<div class="row text-center">
-  <form id="search-box" method="GET" class="form form-inline" action="/explore/" role="login">
-    <div class="form-group">
-      {{ form.q(placeholder="I'm looking for...", class_="form-control") }}
-    </div>
-    <input class="btn btn-default btn-success" type="submit" value="Search">
-  </form>
-</div>
+{% if not names %}
+{% include "explorer/big_search.html" %}
+{% endif %}
 
 {% if names %}
+
 <div class="row">
-  {% for name in names %}
-  <div class="col-md-6">
-    {{ name.name }}
+  <div class="col-md-3">
+    {% include "explorer/side_search.html" %}
   </div>
-  <div class="col-md-6">
-    {{ name.description }}
+  <div class="col-md-9">
+    <h3>{{ names | length }} results found for "{{ term }}"</h3>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Contract Discription</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name in names %}
+        <tr>
+          <td><a href="{{ url_for('explorer.explore_companies', company_id=name.company_id) }}">{{ name.name }}</a></td>
+          <td><a href="{{ url_for('explorer.explore_contracts', contract_id=name.contract_id) }}">{{ name.description }}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-  {% endfor %}
 </div>
 {% elif names is none %}
 <div class="row text-center">

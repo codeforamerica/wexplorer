@@ -43,6 +43,7 @@ docs/_build
 
 .webassets-cache
 
-# Virtualenvs
-env
-env*
+# JS and CSS
+node_modules
+*.css
+common.js

@@ -1,0 +1,74 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-3">
+    {% include "explorer/side_search.html" %}
+  </div>
+
+  <div class="col-md-9">
+    <h3 class="text-center">{{ company.company }} ({{ company.bus_type }})</h3>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="lead">
+          Contact Information
+        </p>
+        <ul class="list-unstyled">
+          {% if company.company_contacts[0].contact_name is not none %}
+          <li>Contact Name: <strong>{{ company.company_contacts[0].contact_name }}</strong></li>
+          {% endif %}
+          {% if company.company_contacts[0].phone_number is not none %}
+          <li>Phone Number: <strong>{{ company.company_contacts[0].phone_number }}</strong></li>
+          {% endif %}
+          {% if company.company_contacts[0].email is not none %}
+          <li>Email: <strong>{{ company.company_contacts[0].email }}</strong></li>
+          {% endif %}
+          {% if company.company_contacts[0].address_1 is not none and company.company_contacts[0].address_2 is not none %}
+          <li>
+            Address:
+            <strong>
+              {{ company.company_contacts[0].address_1 }} <br>
+              {{ company.company_contacts[0].address_2 }}
+            </strong>
+          </li>
+          {% endif %}
+        </ul>
+        <p class="lead">
+          Contracts
+        </p>
+        <ul>
+          {% for contract in company.contracts %}
+          <li>
+            <a href="{{ url_for('explorer.explore_contracts', contract_id=contract.contracts_id) }}">{{ contract.description }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <p class="lead">What have we bought here previously?</p>
+
+        <ul class="list-unstyled">
+          {% if company.purchased_items %}
+          {% for item in company.purchased_items %}
+          <li>{{ item.item }}</li>
+          {% endfor %}
+          {% else %}
+          <li>Nothing here.</li>
+          {% endif %}
+        </ul>
+
+        <p class="lead">What else have we bought?</p>
+        <form name="iform" method="POST" class="form" action="/explore/companies/{{ company.company_id }}/save">
+          <div class="form-group">
+            {{ iform.item(placeholder="Add new item", class_="form-control") }}
+          </div>
+          <input class="btn btn-success" type="submit" value="Add">
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
