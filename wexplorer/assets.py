@@ -2,7 +2,7 @@
 from flask.ext.assets import Bundle, Environment
 
 less = Bundle(
-	"less/*.less",
+    "less/*.less",
     "less/**/*.less",
     filters="less",
     output="public/css/common.css"
@@ -13,7 +13,6 @@ js = Bundle(
     "libs/bootstrap/dist/js/bootstrap.min.js",
     "js/plugins.js",
     "js/script.js",
-    filters='jsmin',
     output="public/js/common.js"
 )
 

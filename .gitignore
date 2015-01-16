@@ -45,5 +45,5 @@ docs/_build
 
 # JS and CSS
 node_modules
-*.css 
-
+*.css
+common.js
