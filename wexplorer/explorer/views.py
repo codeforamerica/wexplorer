@@ -12,10 +12,11 @@ from wexplorer.database import db
 from wexplorer.explorer.models import (
     Company,
     CompanyContact,
-    Contract
+    Contract,
+    PurchasedItems
 )
 
-from wexplorer.explorer.forms import SearchBox
+from wexplorer.explorer.forms import SearchBox, NewItemBox
 
 blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
@@ -50,15 +51,28 @@ def explore_search():
         'explorer/explore.html', form=form, names=results, term=search_for
     )
 
-@blueprint.route('/companies/<int:company_id>', methods=['GET'])
+@blueprint.route('/companies/<int:company_id>/save', methods=['POST'])
+def save_item(company_id):
+    form = NewItemBox(request.form)
+
+    new_item = PurchasedItems(form.data.get('item'), company_id)
+    db.session.add(new_item)
+    db.session.commit()
+
+    return redirect(url_for('explorer.explore_companies', company_id=company_id))
+
+
+
+@blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
 def explore_companies(company_id):
+    form = NewItemBox(request.form)
 
     company = Company.query.join(CompanyContact).filter(
         Company.company_id == company_id
     ).first()
 
     return render_template(
-        'explorer/companies.html', company=company
+        'explorer/companies.html', company=company, form=form
     )
 
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
