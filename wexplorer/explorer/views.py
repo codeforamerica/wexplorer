@@ -61,27 +61,27 @@ def save_item(company_id):
 
     return redirect(url_for('explorer.explore_companies', company_id=company_id))
 
-
-
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
 def explore_companies(company_id):
-    form = NewItemBox(request.form)
+
+    iform = NewItemBox(request.iform)
 
     company = Company.query.join(CompanyContact).filter(
         Company.company_id == company_id
     ).first()
 
     return render_template(
-        'explorer/companies.html', company=company, form=form
+        'explorer/companies.html', company=company, form=SearchBox(), iform=iform
     )
 
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
 def explore_contracts(contract_id):
+    form = SearchBox(request.form)
 
     company = Company.query.join(Contract).filter(
         Contract.contracts_id == contract_id
     ).first()
 
     return render_template(
-        'explorer/contracts.html', company=company
+        'explorer/contracts.html', company=company, form=form
     )

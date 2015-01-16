@@ -2,6 +2,11 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<div class="col-md-3">
+  {% include "explorer/side_search.html" %}
+</div>
+
+<div class="col-md-9">
 <h3 class="text-center">{{ company.company }} ({{ company.bus_type }})</h3>
 
 <div class="row">
@@ -54,13 +59,14 @@
     </ul>
 
     <p class="lead">What else have we bought?</p>
-    <form id="" method="POST" class="form" action="/explore/companies/{{ company.company_id }}/save">
+    <form name="iform" method="POST" class="form" action="/explore/companies/{{ company.company_id }}/save">
       <div class="form-group">
-        {{ form.item(placeholder="Add new item", class_="form-control") }}
+        {{ iform.item(placeholder="Add new item", class_="form-control") }}
       </div>
       <input class="btn btn-success" type="submit" value="Add">
     </form>
 
   </div>
+</div>
 </div>
 {% endblock %}

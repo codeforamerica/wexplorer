@@ -1,3 +1,11 @@
+/* ======================================================================
+   LESS Styles for the Sidebar Nav
+   =================================================================== */
+.side-nav-logo {
+  width: 160px;
+  padding-bottom: 5px;
+}
+
 @import url(http://fonts.googleapis.com/css?family=PT+Sans);
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
@@ -882,7 +890,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "PT Sans" sans-serif;
+  font-family: "PT Sans", sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -1064,7 +1072,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 36px;
+  font-size: 70px;
 }
 h2,
 .h2 {
@@ -6164,9 +6172,40 @@ button.close {
     display: none !important;
   }
 }
-/* =============================================================================
+/* ======================================================================
+   LESS Styles for the Sidebar Nav
+   =================================================================== */
+.mini-submenu {
+  display: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  padding: 9px;
+  width: 42px;
+}
+.mini-submenu:hover {
+  cursor: pointer;
+}
+.mini-submenu .icon-bar {
+  border-radius: 1px;
+  display: block;
+  height: 2px;
+  width: 22px;
+  margin-top: 3px;
+}
+.mini-submenu .icon-bar {
+  background-color: #000;
+}
+#slide-submenu {
+  background: rgba(0, 0, 0, 0.45);
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* ======================================================================
    App specific CSS file.
-   ========================================================================== */
+   =================================================================== */
 /* universal */
 html {
   overflow-y: scroll;
@@ -6184,6 +6223,18 @@ textarea {
   margin: 0 auto;
   max-width: 700px;
 }
+h1 {
+  font-size: 70px;
+  font-weight: 900;
+}
+h2 {
+  font-size: 30px;
+  font-weight: 200;
+}
+h3 {
+  font-size: 24px;
+  color: #777777;
+}
 /* navbar */
 .navbar-header {
   background-color: #000000;
@@ -6194,7 +6245,7 @@ textarea {
 }
 /* Body */
 body {
-  font-family: "PT Sans" sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 /* Forms */
 .navbar-form input[type="text"],
@@ -6223,6 +6274,7 @@ footer {
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #999999;
+  background: #FFFFFF;
 }
 footer a {
   color: #999999;
@@ -6249,9 +6301,9 @@ footer .footer-nav {
 }
 
 @import url(http://fonts.googleapis.com/css?family=PT+Sans);
-/* =============================================================================
+/* ======================================================================
    App specific CSS file.
-   ========================================================================== */
+   =================================================================== */
 /* universal */
 html {
   overflow-y: scroll;
