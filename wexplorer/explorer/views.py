@@ -64,7 +64,7 @@ def save_item(company_id):
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
 def explore_companies(company_id):
 
-    iform = NewItemBox(request.iform)
+    iform = NewItemBox()
 
     company = Company.query.join(CompanyContact).filter(
         Company.company_id == company_id
