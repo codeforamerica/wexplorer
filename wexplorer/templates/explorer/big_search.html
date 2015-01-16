@@ -1,8 +1,7 @@
 <div class="row text-center">
   {% include "big_logo.html" %}
   <h2>helps you find goods and services</h2>
-  <h2 class="text-muted" id="js-cycle-phrases">for the lowest price</h2>
-
+  <h2 class="text-muted padded-bottom"><strong id="js-cycle-phrases">for the lowest price.</strong></h2>
   <form id="search-box" method="GET" class="form form-inline" action="/explore/" role="login">
     <div class="form-group">
       {{ form.q(placeholder="I'm looking for...", class_="form-control") }}

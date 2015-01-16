@@ -8,7 +8,7 @@
   </div>
 
   <div class="col-md-9">
-    <h3 class="text-center">{{ company.company }} ({{ company.bus_type }})</h3>
+    <h3>{{ company.company|title }} ({{ company.bus_type }})</h3>
 
     <div class="row">
       <div class="col-md-6">
@@ -17,7 +17,7 @@
         </p>
         <ul class="list-unstyled">
           {% if company.company_contacts[0].contact_name is not none %}
-          <li>Contact Name: <strong>{{ company.company_contacts[0].contact_name }}</strong></li>
+          <li>Contact Name: <strong>{{ company.company_contacts[0].contact_name|title }}</strong></li>
           {% endif %}
           {% if company.company_contacts[0].phone_number is not none %}
           <li>Phone Number: <strong>{{ company.company_contacts[0].phone_number }}</strong></li>
@@ -29,8 +29,8 @@
           <li>
             Address:
             <strong>
-              {{ company.company_contacts[0].address_1 }} <br>
-              {{ company.company_contacts[0].address_2 }}
+              {{ company.company_contacts[0].address_1|title }} <br>
+              {{ company.company_contacts[0].address_2|title }}
             </strong>
           </li>
           {% endif %}
@@ -41,7 +41,7 @@
         <ul>
           {% for contract in company.contracts %}
           <li>
-            <a href="{{ url_for('explorer.explore_contracts', contract_id=contract.contracts_id) }}">{{ contract.description }}</a>
+            <a href="{{ url_for('explorer.explore_contracts', contract_id=contract.contracts_id) }}">{{ contract.description|title }}</a>
           </li>
           {% endfor %}
         </ul>
