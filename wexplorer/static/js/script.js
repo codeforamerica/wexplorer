@@ -7,11 +7,13 @@
     'requiring the least paperwork',
   ];
   var count = 1;
-  setInterval(function(){
-    t.innerHTML=phrases[count];
-    count++;
-    if(count>=phrases.length) {
-      count=0;
-    }
-  }, 1600);
+  if (t) {
+    setInterval(function(){
+      t.innerHTML=phrases[count];
+      count++;
+      if(count>=phrases.length) {
+        count=0;
+      }
+    }, 1600);
+  }
 }).call(this, jQuery, window);
