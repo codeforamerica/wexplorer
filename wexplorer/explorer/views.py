@@ -56,11 +56,10 @@ def search():
     )
 
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
-def companies(company_id):
+def companies(company_id, page=1):
     '''
     Simple profile page for companies
     '''
-
     iform = NewItemBox()
     page = int(request.args.get('page', 1))
 

@@ -5,7 +5,7 @@ less = Bundle(
 	"less/main.less",
     filters="less",
     output="public/css/common.css",
-    depends=('*.less', '**/*.less')
+    depends=('less/*.less', 'less/**/*.less')
 )
 
 js = Bundle(

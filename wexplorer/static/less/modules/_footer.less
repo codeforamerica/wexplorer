@@ -2,20 +2,14 @@
 //    LESS Styles for the Footer
 //   =================================================================== */
 
-footer {
+.footer{
+  position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  margin-top: 45px;
-  padding-top: 5px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: @footer-height;
+  background-color: @body-bg;
   border-top: 1px solid #eaeaea;
-  background: @body-bg;
-  @media @desktop, @desktop-xl {
-    position: fixed;
-  }
-  @media @tablet, @mobile {
-    position: relative;
-  }
 }
 
 footer a {

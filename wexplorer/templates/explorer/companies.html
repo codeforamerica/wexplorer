@@ -52,7 +52,7 @@
         {% include "explorer/items.html" %}
 
         <p class="lead">What else have we bought?</p>
-        <form name="iform" method="POST" class="form" action="/explore/companies/{{ company.company_id }}/save">
+        <form name="iform" method="POST" class="form form-inline" action="/explore/companies/{{ company.company_id }}/save">
           <div class="form-group">
             {{ iform.item(placeholder="Add new item", class_="form-control") }}
           </div>
