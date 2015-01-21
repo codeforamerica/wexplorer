@@ -28,13 +28,12 @@ class CompanyContact(Model):
     fax_number = Column(db.String(255))
     email = Column(db.String(255))
     fin = Column(db.String(255))
-    # company_id = Column(db.Integer)
     company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
 
 class Contract(Model):
-    __tablename__ = 'contracts'
+    __tablename__ = 'contract'
 
-    contracts_id = Column(db.Integer, primary_key=True)
+    contract_id = Column(db.Integer, primary_key=True)
     description = Column(db.Text)
     notes = Column(db.Text)
     contract_number = Column(db.String(255))
@@ -45,7 +44,6 @@ class Contract(Model):
     spec_number = Column(db.String(255))
     controller_number = Column(db.Integer)
     commcode = Column(db.Integer)
-    # company_id = Column(db.Integer)
     company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
 
 class PurchasedItems(Model):

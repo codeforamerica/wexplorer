@@ -7,9 +7,10 @@ W:/Explorer (or just wexplorer) is [Team Pittsburgh's](http://www.codeforamerica
 
 #### Current Features
 + Quick search of company names & contract descriptions
++ Contract & company pages with more information about contracts/companies/contacts
++ Ability to add lists of items purchased from these contracts
 
 #### Planned & In Development Features
-+ Contract & company pages with more information about contracts/companies/contacts
 + Crowdsourced metadata about contracts
 
 Quickstart
@@ -17,20 +18,22 @@ Quickstart
 
 It is highly recommended that you use use [virtualenv](https://readthedocs.org/projects/virtualenv/) (and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) for convenience). For a how-to on getting set up, please consult this [howto](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md).
 
-First, set your app's secret key as an environment variable. For example, example add the following to `.bashrc` or `.bash_profile`.
+Then run the following commands to bootstrap your environment. You will need to make sure that you have a database to work with and that it is configured properly. If you don't include information about how to configure the database in your environment, wexplorer will look for a db named `w_drive`.
 
-    export WEXPLORER_SECRET = 'something-really-secret'
-
-Then run the following commands to bootstrap your environment.
-
-
+    # clone the repo
     git clone https://github.com/bsmithgall/wexplorer
+    # change into the repo directory
     cd wexplorer
+    # install python dependencies
     pip install -r requirements.txt
-    python manage.py db init
-    python manage.py db migrate
+    # upgrade your database to the latest version
     python manage.py db upgrade
+    # run the server
     python manage.py server
+
+NOTE: If this is the first time that you are working with wexplorer, be sure to run the following command (before starting your server) to stamp your database and allow for future migrations:
+
+    python manage.py db stamp
 
 Deployment
 ----------

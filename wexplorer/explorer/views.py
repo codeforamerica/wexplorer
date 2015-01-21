@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from flask import (
     Blueprint,
     render_template,
@@ -22,9 +23,12 @@ blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
 
 @blueprint.route('/', methods=['GET', 'POST'])
-def explore_search():
+def search():
+    '''
+    The view for the basic search box.
+    '''
     form = SearchBox(request.form)
-    # if request.method == 'POST':
+
     if request.args.get('q') is None:
         return render_template('explorer/explore.html', form=form)
 
@@ -39,7 +43,7 @@ def explore_search():
     for company in companies:
         results.append({
             'company_id': company.company_id,
-            'contract_id': company.contracts[0].contracts_id,
+            'contract_id': company.contracts[0].contract_id,
             'name': company.company,
             'description': company.contracts[0].description
         })
@@ -48,22 +52,14 @@ def explore_search():
         results = None
 
     return render_template(
-        'explorer/explore.html', form=form, names=results, term=search_for
+        'explorer/explore.html', form=form, names=results
     )
 
-@blueprint.route('/companies/<int:company_id>/save', methods=['POST'])
-def save_item(company_id):
-    form = NewItemBox(request.form)
-
-    new_item = PurchasedItems(form.data.get('item'), company_id)
-    db.session.add(new_item)
-    db.session.commit()
-
-    return redirect(url_for('explorer.explore_companies', company_id=company_id))
-
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
-def explore_companies(company_id, page=1):
-
+def companies(company_id, page=1):
+    '''
+    Simple profile page for companies
+    '''
     iform = NewItemBox()
     page = int(request.args.get('page', 1))
 
@@ -84,11 +80,14 @@ def explore_companies(company_id, page=1):
     )
 
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
-def explore_contracts(contract_id):
+def contracts(contract_id):
+    '''
+    Simple profile page for individual contracts
+    '''
     form = SearchBox(request.form)
 
     company = Company.query.join(Contract).filter(
-        Contract.contracts_id == contract_id
+        Contract.contract_id == contract_id
     ).first()
 
     return render_template(
@@ -96,3 +95,16 @@ def explore_contracts(contract_id):
         company=company,
         form=form
     )
+
+@blueprint.route('/companies/<int:company_id>/save', methods=['POST'])
+def save_item(company_id):
+    '''
+    Redirect route for saving new purchased items
+    '''
+    form = NewItemBox(request.form)
+
+    new_item = PurchasedItems(form.data.get('item'), company_id)
+    db.session.add(new_item)
+    db.session.commit()
+
+    return redirect(url_for('explorer.companies', company_id=company_id))

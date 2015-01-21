@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from wexplorer.public.forms import LoginForm
+from wexplorer.shared.forms import LoginForm
 from wexplorer.user.forms import RegisterForm
 from .factories import UserFactory
 
