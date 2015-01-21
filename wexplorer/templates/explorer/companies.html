@@ -41,7 +41,7 @@
         <ul>
           {% for contract in company.contracts %}
           <li>
-            <a href="{{ url_for('explorer.explore_contracts', contract_id=contract.contracts_id) }}">{{ contract.description|title }}</a>
+            <a href="{{ url_for('explorer.explore_contracts', contract_id=contract.contract_id) }}">{{ contract.description|title }}</a>
           </li>
           {% endfor %}
         </ul>

@@ -13,7 +13,7 @@
     {% include "explorer/side_search.html" %}
   </div>
   <div class="col-md-9">
-    <h3 class="text-muted">{{ names | length }} results found for "{{ term }}"</h3>
+    <h3 class="text-muted">{{ names | length }} results found for "{{ request.args.get('q') }}"</h3>
     <table class="table table-condensed">
       <thead>
         <tr>
