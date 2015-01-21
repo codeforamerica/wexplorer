@@ -33,7 +33,7 @@ Then run the following commands to bootstrap your environment. You will need to 
 
 NOTE: If this is the first time that you are working with wexplorer, be sure to run the following command (before starting your server) to stamp your database and allow for future migrations:
 
-    python manage.py db stamp
+    python manage.py db stamp head
 
 Deployment
 ----------
