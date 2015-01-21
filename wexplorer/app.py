@@ -12,8 +12,7 @@ from wexplorer.extensions import (
     migrate,
     debug_toolbar,
 )
-from wexplorer import public, user, explorer
-
+from wexplorer import shared, user, explorer
 
 def create_app(config_object=DevConfig):
     '''An application factory, as explained here:
@@ -28,7 +27,6 @@ def create_app(config_object=DevConfig):
     register_errorhandlers(app)
     return app
 
-
 def register_extensions(app):
     assets.init_app(app)
     bcrypt.init_app(app)
@@ -39,13 +37,10 @@ def register_extensions(app):
     migrate.init_app(app, db)
     return None
 
-
 def register_blueprints(app):
-    app.register_blueprint(public.views.blueprint)
-    app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(shared.views.blueprint)
     app.register_blueprint(explorer.views.blueprint)
     return None
-
 
 def register_errorhandlers(app):
     def render_error(error):
