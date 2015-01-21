@@ -1,0 +1,23 @@
+// /* ======================================================================
+//    LESS Styles for the Footer
+//   =================================================================== */
+
+footer {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  background: @body-bg;
+  @media @desktop, @desktop-xl {
+    position: fixed;
+  }
+  @media @tablet, @mobile {
+    position: relative;
+  }
+}
+
+footer a {
+  color: @link-color;
+}

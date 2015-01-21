@@ -1,5 +1,8 @@
+// /* ======================================================================
+//   Variable Overrides for Custom Wexplorer Styling
+//   =================================================================== */
+
 @import "../libs/bootstrap/less/variables.less";
-@import url(http://fonts.googleapis.com/css?family=PT+Sans);
 @gray-darker:            lighten(#000, 13.5%); // #222
 @gray-dark:              lighten(#000, 20%);   // #333
 @gray:                   lighten(#000, 33.5%); // #555
@@ -12,13 +15,13 @@
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 
-//** Background color for `<body>`.
 @body-bg:               #F2F2F2;
 
-//== Typography
-//
-//## Font, line-height, and color for body text, headings, and more.
+// /* Typography
+// Font, line-height, and color for body text, headings, and more.
+// */
 
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
 @font-family-sans-serif:  "PT Sans", sans-serif; 
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 
@@ -37,9 +40,9 @@
 @font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
 
 
-//== Buttons
-//
-//## For each of Bootstrap's buttons, define text, background and border color.
+// /* Buttons
+// For each of Bootstrap's buttons, define text, background and border color.
+// */
 
 @btn-font-weight:                normal;
 
@@ -69,10 +72,24 @@
 
 @btn-link-disabled-color:        @gray-light;
 
-//== Components
-//
-//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+// /* Components
+// Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+// */
 
 @border-radius-base:        4px;
 @border-radius-large:       6px;
 @border-radius-small:       3px;
+
+
+// /* Media queries
+// Define the breakpoints at which your layout will change, adapting to different screen sizes.
+// */
+
+@highdensity: ~"only screen and (-webkit-min-device-pixel-ratio: 1.5)",
+              ~"only screen and (min--moz-device-pixel-ratio: 1.5)",
+              ~"only screen and (-o-min-device-pixel-ratio: 3/2)",
+              ~"only screen and (min-device-pixel-ratio: 1.5)";
+@mobile:      ~"only screen and (max-width: 529px)";
+@tablet:      ~"only screen and (min-width: 530px) and (max-width: 949px)";
+@desktop:     ~"only screen and (min-width: 950px) and (max-width: 1128px)";
+@desktop-xl:  ~"only screen and (min-width: 1129px)";

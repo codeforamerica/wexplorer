@@ -2,10 +2,10 @@
 from flask.ext.assets import Bundle, Environment
 
 less = Bundle(
-    "less/*.less",
-    "less/**/*.less",
+	"less/main.less",
     filters="less",
-    output="public/css/common.css"
+    output="public/css/common.css",
+    depends=('*.less', '**/*.less')
 )
 
 js = Bundle(
