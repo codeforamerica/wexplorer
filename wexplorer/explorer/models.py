@@ -31,7 +31,7 @@ class CompanyContact(Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
 
 class Contract(Model):
-    __tablename__ = 'contracts'
+    __tablename__ = 'contract'
 
     contract_id = Column(db.Integer, primary_key=True)
     description = Column(db.Text)

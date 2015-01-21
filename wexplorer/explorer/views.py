@@ -23,7 +23,7 @@ blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
 
 @blueprint.route('/', methods=['GET', 'POST'])
-def explore_search():
+def search():
     '''
     The view for the basic search box.
     '''
@@ -56,7 +56,7 @@ def explore_search():
     )
 
 @blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
-def explore_companies(company_id):
+def companies(company_id):
     '''
     Simple profile page for companies
     '''
@@ -81,7 +81,7 @@ def explore_companies(company_id):
     )
 
 @blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
-def explore_contracts(contract_id):
+def contracts(contract_id):
     '''
     Simple profile page for individual contracts
     '''
@@ -108,4 +108,4 @@ def save_item(company_id):
     db.session.add(new_item)
     db.session.commit()
 
-    return redirect(url_for('explorer.explore_companies', company_id=company_id))
+    return redirect(url_for('explorer.companies', company_id=company_id))

@@ -24,8 +24,8 @@
       <tbody>
         {% for name in names %}
         <tr>
-          <td><a href="{{ url_for('explorer.explore_companies', company_id=name.company_id) }}">{{ name.name|string|title }}</a></td>
-          <td><a href="{{ url_for('explorer.explore_contracts', contract_id=name.contract_id) }}">{{ name.description|string|title }}</a></td>
+          <td><a href="{{ url_for('explorer.companies', company_id=name.company_id) }}">{{ name.name|string|title }}</a></td>
+          <td><a href="{{ url_for('explorer.contracts', contract_id=name.contract_id) }}">{{ name.description|string|title }}</a></td>
         </tr>
         {% endfor %}
       </tbody>
