@@ -55,7 +55,7 @@ def search():
         'explorer/explore.html', form=form, names=results
     )
 
-@blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
+@blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])
 def companies(company_id, page=1):
     '''
     Simple profile page for companies
@@ -79,7 +79,7 @@ def companies(company_id, page=1):
         purchases=purchases,
     )
 
-@blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
+@blueprint.route('/contracts/<contract_id>', methods=['GET'])
 def contracts(contract_id):
     '''
     Simple profile page for individual contracts

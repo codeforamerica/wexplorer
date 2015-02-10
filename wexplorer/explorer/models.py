@@ -7,10 +7,12 @@ from wexplorer.database import (
     relationship
 )
 
+from sqlalchemy.dialects.postgresql import UUID
+
 class Company(Model):
     __tablename__ = 'company'
-
-    company_id = Column(db.Integer, primary_key=True)
+    row_id = Column(db.Integer)
+    company_id = Column(db.String(32), primary_key=True)
     company = Column(db.String(255))
     bus_type = Column(db.String(255))
     company_contacts = db.relationship('CompanyContact', backref='company', lazy='joined')
@@ -19,8 +21,8 @@ class Company(Model):
 
 class CompanyContact(Model):
     __tablename__ = 'company_contact'
-
-    company_contact_id = Column(db.Integer, primary_key=True)
+    row_id = Column(db.Integer)
+    company_contact_id = Column(db.String(32), primary_key=True)
     contact_name = Column(db.String(255))
     address_1 = Column(db.String(255))
     address_2 = Column(db.String(255))
@@ -28,12 +30,12 @@ class CompanyContact(Model):
     fax_number = Column(db.String(255))
     email = Column(db.String(255))
     fin = Column(db.String(255))
-    company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
+    company_id = Column(db.String(32), db.ForeignKey('company.company_id'))
 
 class Contract(Model):
     __tablename__ = 'contract'
-
-    contract_id = Column(db.Integer, primary_key=True)
+    row_id = Column(db.Integer)
+    contract_id = Column(db.String(32), primary_key=True)
     description = Column(db.Text)
     notes = Column(db.Text)
     contract_number = Column(db.String(255))
@@ -44,14 +46,13 @@ class Contract(Model):
     spec_number = Column(db.String(255))
     controller_number = Column(db.Integer)
     commcode = Column(db.Integer)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
+    company_id = Column(db.String(32), db.ForeignKey('company.company_id'))
 
 class PurchasedItems(Model):
     __tablename__ = 'company_purchases'
-
-    purchase_id = Column(db.Integer, primary_key=True)
+    row_id = Column(db.Integer, primary_key=True)
     item = Column(db.Text)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.company_id'))
+    company_id = Column(db.String(32), db.ForeignKey('company.company_id'))
 
     def __init__(self, item, company_id):
         self.item = item
