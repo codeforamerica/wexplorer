@@ -46,10 +46,11 @@ def search():
         WHERE a.company ilike :search_for_wc
         OR b.description ilike :search_for_wc
         OR b.controller_number::VARCHAR = :search_for
+        OR b.spec_number ilike :search_for_wc
         OR c.item ilike :search_for_wc
         ''',
         {
-            'search_for_wc': '%' + search_for + '%',
+            'search_for_wc': '%' + str(search_for)   + '%',
             'search_for': search_for
         }
     ).fetchall()
