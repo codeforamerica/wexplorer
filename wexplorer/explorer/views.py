@@ -56,7 +56,6 @@ def search():
     ).fetchall()
 
     for company in companies:
-        print company
         results.append({
             'company_id': company[0],
             'contract_id': company[1],
@@ -79,7 +78,7 @@ def companies(company_id, page=1):
     iform = NewItemBox()
     page = int(request.args.get('page', 1))
 
-    company = Company.query.join(CompanyContact).filter(
+    company = Company.query.outerjoin(CompanyContact).filter(
         Company.company_id == company_id
     ).first()
 
@@ -112,7 +111,7 @@ def contracts(contract_id):
         form=form
     )
 
-@blueprint.route('/companies/<int:company_id>/save', methods=['POST'])
+@blueprint.route('/companies/<company_id>/save', methods=['POST'])
 def save_item(company_id):
     '''
     Redirect route for saving new purchased items

@@ -16,23 +16,27 @@
           Contact Information
         </p>
         <ul class="list-unstyled">
-          {% if company.company_contacts[0].contact_name is not none %}
-          <li>Contact Name: <strong>{{ company.company_contacts[0].contact_name|title }}</strong></li>
-          {% endif %}
-          {% if company.company_contacts[0].phone_number is not none %}
-          <li>Phone Number: <strong>{{ company.company_contacts[0].phone_number }}</strong></li>
-          {% endif %}
-          {% if company.company_contacts[0].email is not none %}
-          <li>Email: <strong>{{ company.company_contacts[0].email }}</strong></li>
-          {% endif %}
-          {% if company.company_contacts[0].address_1 is not none and company.company_contacts[0].address_2 is not none %}
-          <li>
-            Address:
-            <strong>
-              {{ company.company_contacts[0].address_1|title }} <br>
-              {{ company.company_contacts[0].address_2|title }}
-            </strong>
-          </li>
+          {% if company.company_contacts %}
+            {% if company.company_contacts[0].contact_name is not none %}
+            <li>Contact Name: <strong>{{ company.company_contacts[0].contact_name|title }}</strong></li>
+            {% endif %}
+            {% if company.company_contacts[0].phone_number is not none %}
+            <li>Phone Number: <strong>{{ company.company_contacts[0].phone_number }}</strong></li>
+            {% endif %}
+            {% if company.company_contacts[0].email is not none %}
+            <li>Email: <strong>{{ company.company_contacts[0].email }}</strong></li>
+            {% endif %}
+            {% if company.company_contacts[0].address_1 is not none and company.company_contacts[0].address_2 is not none %}
+            <li>
+              Address:
+              <strong>
+                {{ company.company_contacts[0].address_1|title }} <br>
+                {{ company.company_contacts[0].address_2|title }}
+              </strong>
+            </li>
+            {% endif %}
+          {% else %}
+            <p>No contact information available.</p>
           {% endif %}
         </ul>
         <p class="lead">
