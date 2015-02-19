@@ -35,17 +35,33 @@ def search():
     results = []
     search_for = request.args.get('q')
 
-    companies = Company.query.join(Contract).filter(or_(
-        Company.company.like('%' + search_for + '%'),
-        Contract.description.ilike('%' + search_for + '%')
-    )).all()
+    companies = db.session.execute(
+        '''
+        SELECT a.company_id, b.contract_id, a.company, b.description
+        FROM company a
+        INNER JOIN contract b
+        ON a.company_id = b.company_id
+        LEFT OUTER JOIN company_purchases c
+        ON a.company_id = c.company_id
+        WHERE a.company ilike :search_for_wc
+        OR b.description ilike :search_for_wc
+        OR b.controller_number::VARCHAR = :search_for
+        OR b.spec_number ilike :search_for_wc
+        OR c.item ilike :search_for_wc
+        ''',
+        {
+            'search_for_wc': '%' + str(search_for)   + '%',
+            'search_for': search_for
+        }
+    ).fetchall()
 
     for company in companies:
+        print company
         results.append({
-            'company_id': company.company_id,
-            'contract_id': company.contracts[0].contract_id,
-            'name': company.company,
-            'description': company.contracts[0].description
+            'company_id': company[0],
+            'contract_id': company[1],
+            'name': company[2],
+            'description': company[3]
         })
 
     if len(results) == 0:
@@ -55,7 +71,7 @@ def search():
         'explorer/explore.html', form=form, names=results
     )
 
-@blueprint.route('/companies/<int:company_id>', methods=['GET', 'POST'])
+@blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])
 def companies(company_id, page=1):
     '''
     Simple profile page for companies
@@ -79,7 +95,7 @@ def companies(company_id, page=1):
         purchases=purchases,
     )
 
-@blueprint.route('/contracts/<int:contract_id>', methods=['GET'])
+@blueprint.route('/contracts/<contract_id>', methods=['GET'])
 def contracts(contract_id):
     '''
     Simple profile page for individual contracts
