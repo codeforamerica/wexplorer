@@ -16,8 +16,8 @@
           Company Contacts
         </p>
         <ul class="list-unstyled">
-          {% if company.company_contacts %}
-            {% for contact in company.company_contacts %}
+          {% if contacts %}
+            {% for contact in contacts %}
               {% if contact.contact_name is not none %}
               <li><span class="span-callout"><strong>{{ contact.contact_name|title }}</strong></span></li>
               {% endif %}

@@ -7,7 +7,8 @@ from flask import (
     redirect,
     url_for
 )
-from sqlalchemy import or_
+from sqlalchemy import or_, distinct
+from sqlalchemy.orm import load_only
 
 from wexplorer.database import db
 from wexplorer.explorer.models import (
@@ -85,9 +86,19 @@ def companies(company_id, page=1):
     iform = NewItemBox()
     page = int(request.args.get('page', 1))
 
-    company = Company.query.outerjoin(CompanyContact).filter(
+    company = Company.query.filter(
         Company.company_id == company_id
-    ).first()
+    ).distinct().first()
+
+    contacts = CompanyContact.query.distinct(
+        CompanyContact.contact_name, CompanyContact.address_1,
+        CompanyContact.address_2, CompanyContact.phone_number,
+        CompanyContact.email,
+    ).options(
+        load_only(
+            'contact_name', 'address_1', 'address_2', 'phone_number', 'email'
+        )
+    ).filter(CompanyContact.company_id == company_id).all()
 
     purchases = PurchasedItems.query.filter(
         PurchasedItems.company_id == company_id
@@ -96,6 +107,7 @@ def companies(company_id, page=1):
     return render_template(
         'explorer/companies.html',
         company=company,
+        contacts=contacts,
         form=SearchBox(),
         iform=iform,
         purchases=purchases,
