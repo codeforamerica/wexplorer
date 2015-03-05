@@ -1,5 +1,6 @@
 
 {% extends "layout.html" %}
+{% import "macros/render_pagination.html" as macros %}
 {% block content %}
 
 {% if not names %}
@@ -13,12 +14,15 @@
     {% include "explorer/side_search.html" %}
   </div>
   <div class="col-md-9">
-    <h3 class="text-muted">{{ names | length }} results found for "{{ request.args.get('q') }}"</h3>
-    <table class="table table-condensed">
+    <h3 class="text-muted">
+      {{ pagination.total_count }} results found for "{{ request.args.get('q') }}"
+      {% if pagination.pages > 1 %}({{ (names | length) }} shown){% endif %}
+    </h3>
+    <table class="table table-condensed" id="js-explore-search-results">
       <thead>
         <tr>
-          <th>Company</th>
-          <th>Contract Discription</th>
+          <th class="js-sortable-th">Company</th>
+          <th class="js-sortable-th">Contract Discription</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +34,9 @@
         {% endfor %}
       </tbody>
     </table>
+    {% if pagination.pages > 1 %}
+      {{ macros.render_pagination(pagination) }}
+    {% endif %}
   </div>
 </div>
 {% elif names is none %}

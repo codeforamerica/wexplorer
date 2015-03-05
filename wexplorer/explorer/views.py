@@ -16,6 +16,7 @@ from wexplorer.explorer.models import (
     Contract,
     PurchasedItems
 )
+from wexplorer.explorer.util import SimplePagination
 
 from wexplorer.explorer.forms import SearchBox, NewItemBox
 
@@ -34,6 +35,9 @@ def search():
 
     results = []
     search_for = request.args.get('q')
+    page = int(request.args.get('page', 1))
+    lower_bound = (page - 1) * 50
+    upper_bound = lower_bound + 50
 
     companies = db.session.execute(
         '''
@@ -48,14 +52,17 @@ def search():
         OR b.controller_number::VARCHAR = :search_for
         OR b.spec_number ilike :search_for_wc
         OR c.item ilike :search_for_wc
+        ORDER BY a.company, b.description
         ''',
         {
             'search_for_wc': '%' + str(search_for)   + '%',
-            'search_for': search_for
+            'search_for': search_for,
         }
     ).fetchall()
 
-    for company in companies:
+    pagination = SimplePagination(page, 50, len(companies))
+
+    for company in companies[lower_bound:upper_bound]:
         results.append({
             'company_id': company[0],
             'contract_id': company[1],
@@ -67,7 +74,7 @@ def search():
         results = None
 
     return render_template(
-        'explorer/explore.html', form=form, names=results
+        'explorer/explore.html', form=form, names=results, pagination=pagination
     )
 
 @blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])

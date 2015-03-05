@@ -12,6 +12,7 @@ from wexplorer.extensions import (
     migrate,
     debug_toolbar,
 )
+from wexplorer.utils import url_for_other_page
 from wexplorer import shared, user, explorer
 
 def create_app(config_object=DevConfig):
@@ -35,6 +36,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+    app.jinja_env.globals['url_for_other_page'] = url_for_other_page
     return None
 
 def register_blueprints(app):
