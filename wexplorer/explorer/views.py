@@ -7,7 +7,8 @@ from flask import (
     redirect,
     url_for
 )
-from sqlalchemy import or_
+from sqlalchemy import or_, distinct
+from sqlalchemy.orm import load_only
 
 from wexplorer.database import db
 from wexplorer.explorer.models import (
@@ -16,6 +17,7 @@ from wexplorer.explorer.models import (
     Contract,
     PurchasedItems
 )
+from wexplorer.explorer.util import SimplePagination
 
 from wexplorer.explorer.forms import SearchBox, NewItemBox
 
@@ -34,6 +36,9 @@ def search():
 
     results = []
     search_for = request.args.get('q')
+    page = int(request.args.get('page', 1))
+    lower_bound = (page - 1) * 50
+    upper_bound = lower_bound + 50
 
     companies = db.session.execute(
         '''
@@ -48,14 +53,17 @@ def search():
         OR b.controller_number::VARCHAR = :search_for
         OR b.spec_number ilike :search_for_wc
         OR c.item ilike :search_for_wc
+        ORDER BY a.company, b.description
         ''',
         {
             'search_for_wc': '%' + str(search_for)   + '%',
-            'search_for': search_for
+            'search_for': search_for,
         }
     ).fetchall()
 
-    for company in companies:
+    pagination = SimplePagination(page, 50, len(companies))
+
+    for company in companies[lower_bound:upper_bound]:
         results.append({
             'company_id': company[0],
             'contract_id': company[1],
@@ -67,7 +75,7 @@ def search():
         results = None
 
     return render_template(
-        'explorer/explore.html', form=form, names=results
+        'explorer/explore.html', form=form, names=results, pagination=pagination
     )
 
 @blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])
@@ -78,9 +86,19 @@ def companies(company_id, page=1):
     iform = NewItemBox()
     page = int(request.args.get('page', 1))
 
-    company = Company.query.outerjoin(CompanyContact).filter(
+    company = Company.query.filter(
         Company.company_id == company_id
-    ).first()
+    ).distinct().first()
+
+    contacts = CompanyContact.query.distinct(
+        CompanyContact.contact_name, CompanyContact.address_1,
+        CompanyContact.address_2, CompanyContact.phone_number,
+        CompanyContact.email,
+    ).options(
+        load_only(
+            'contact_name', 'address_1', 'address_2', 'phone_number', 'email'
+        )
+    ).filter(CompanyContact.company_id == company_id).all()
 
     purchases = PurchasedItems.query.filter(
         PurchasedItems.company_id == company_id
@@ -89,6 +107,7 @@ def companies(company_id, page=1):
     return render_template(
         'explorer/companies.html',
         company=company,
+        contacts=contacts,
         form=SearchBox(),
         iform=iform,
         purchases=purchases,
