@@ -9,6 +9,7 @@
 
   <div class="col-md-9">
     <h3>{{ company.company|title }} {% if company.bus_type %}({{ company.bus_type }}){% endif %}</h3>
+    <hr>
 
     <div class="row">
       <div class="col-md-6">
@@ -41,6 +42,8 @@
             <p>No contact information available.</p>
           {% endif %}
         </ul>
+      </div>
+      <div class="col-md-6">
         <p class="lead">
           Contracts
         </p>
@@ -52,20 +55,7 @@
           {% endfor %}
         </ul>
       </div>
-      <div class="col-md-6">
-        <p class="lead">What have we bought here previously?</p>
 
-        {% include "explorer/items.html" %}
-
-        <p class="lead">What else have we bought?</p>
-        <form name="iform" method="POST" class="form form-inline" action="/explore/companies/{{ company.company_id }}/save">
-          <div class="form-group">
-            {{ iform.item(placeholder="Add new item", class_="form-control") }}
-          </div>
-          <input class="btn btn-success" type="submit" value="Add">
-        </form>
-
-      </div>
     </div>
   </div>
 </div>

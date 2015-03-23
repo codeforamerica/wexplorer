@@ -45,13 +45,10 @@ def search():
         FROM company a
         INNER JOIN contract b
         ON a.company_id = b.company_id
-        LEFT OUTER JOIN company_purchases c
-        ON a.company_id = c.company_id
         WHERE a.company ilike :search_for_wc
         OR b.description ilike :search_for_wc
         OR b.controller_number::VARCHAR = :search_for
         OR b.spec_number ilike :search_for_wc
-        OR c.item ilike :search_for_wc
         ORDER BY a.company, b.description
         ''',
         {
