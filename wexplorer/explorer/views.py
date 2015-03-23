@@ -14,8 +14,7 @@ from wexplorer.database import db
 from wexplorer.explorer.models import (
     Company,
     CompanyContact,
-    Contract,
-    PurchasedItems
+    Contract
 )
 from wexplorer.explorer.util import SimplePagination
 
@@ -100,17 +99,12 @@ def companies(company_id, page=1):
         )
     ).filter(CompanyContact.company_id == company_id).all()
 
-    purchases = PurchasedItems.query.filter(
-        PurchasedItems.company_id == company_id
-    ).paginate(page, 5, False)
-
     return render_template(
         'explorer/companies.html',
         company=company,
         contacts=contacts,
         form=SearchBox(),
-        iform=iform,
-        purchases=purchases,
+        iform=iform
     )
 
 @blueprint.route('/contracts/<contract_id>', methods=['GET'])
@@ -129,16 +123,3 @@ def contracts(contract_id):
         company=company,
         form=form
     )
-
-@blueprint.route('/companies/<company_id>/save', methods=['POST'])
-def save_item(company_id):
-    '''
-    Redirect route for saving new purchased items
-    '''
-    form = NewItemBox(request.form)
-
-    new_item = PurchasedItems(form.data.get('item'), company_id)
-    db.session.add(new_item)
-    db.session.commit()
-
-    return redirect(url_for('explorer.companies', company_id=company_id))
