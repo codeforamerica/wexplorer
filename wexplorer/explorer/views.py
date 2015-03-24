@@ -38,7 +38,6 @@ def search():
     lower_bound = (page - 1) * 50
     upper_bound = lower_bound + 50
 
-    import pdb; pdb.set_trace()
     companies = db.session.execute(
         '''
         SELECT a.company_id, b.contract_id, a.company, b.description
