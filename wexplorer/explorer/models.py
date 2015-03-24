@@ -8,6 +8,17 @@ from wexplorer.database import (
 )
 
 from sqlalchemy.dialects.postgresql import UUID
+from wexplorer.extensions import bcrypt
+
+class FileUploadPassword(Model):
+    __tablename__ = 'file_upload_password'
+    password = Column(db.String(128), nullable=False, primary_key=True)
+
+    def __init__(self, password):
+        if password:
+            self.password = bcrypt.generate_password_hash(password)
+        else:
+            raise Exception('File Upload Password must be supplied')
 
 class Company(Model):
     __tablename__ = 'company'
@@ -37,12 +48,12 @@ class Contract(Model):
     contract_id = Column(db.String(32), primary_key=True)
     description = Column(db.Text)
     notes = Column(db.Text)
-    contract_number = Column(db.String(255))
     county = Column(db.String(255))
     type_of_contract = Column(db.String(255))
     pa = Column(db.String(255))
     expiration = Column(db.DateTime)
-    spec_number = Column(db.String(255))
+    contract_number = Column(db.String(255))
+    contract_sub_number = Column(db.Integer)
     controller_number = Column(db.Integer)
     commcode = Column(db.Integer)
     company_id = Column(db.String(32), db.ForeignKey('company.company_id'))

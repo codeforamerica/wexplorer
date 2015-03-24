@@ -9,6 +9,7 @@ from flask.ext.assets import ManageAssets
 
 from wexplorer.app import create_app
 from wexplorer.user.models import User
+from wexplorer.explorer.models import FileUploadPassword
 from wexplorer.settings import DevConfig, ProdConfig
 from wexplorer.database import db
 
@@ -34,6 +35,18 @@ def test():
     import pytest
     exit_code = pytest.main([TEST_PATH, '--verbose'])
     return exit_code
+
+@manager.command
+def seed():
+    current_pass = FileUploadPassword.query.first()
+    if current_pass:
+        db.session.delete(current_pass)
+        db.commit()
+
+    password = FileUploadPassword(app.config.get('UPLOAD_PASSWORD'))
+    db.session.add(password)
+    db.session.commit()
+    return
 
 manager.add_command('server', Server())
 manager.add_command('shell', Shell(make_context=_make_context))

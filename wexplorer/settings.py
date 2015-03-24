@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
+HERE = os.path.abspath(os.path.dirname(__file__))
 os_env = os.environ
 
 class Config(object):
@@ -12,7 +13,8 @@ class Config(object):
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
-
+    UPLOAD_PASSWORD = os_env.get('UPLOAD_PASSWORD', 'upload') # TOOO: Change me
+    UPLOAD_FOLDER = os.path.join(HERE, os_env.get('UPLOAD_FOLDER', 'uploads/'))
 
 class ProdConfig(Config):
     """Production configuration."""

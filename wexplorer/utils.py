@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''Helper utilities and decorators.'''
-from flask import flash, request, url_for
+from flask import flash, request, url_for, current_app
+from wexplorer.explorer.models import FileUploadPassword
 
 def flash_errors(form, category="warning"):
     '''Flash all errors for a form.'''

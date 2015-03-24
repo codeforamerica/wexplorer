@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
+import os
+from werkzeug import secure_filename
 from flask import (
-    Blueprint,
-    render_template,
-    request,
-    redirect,
-    url_for
+    Blueprint, render_template, request,
+    redirect, url_for, current_app, jsonify
 )
+from flask.ext.uploads import UploadSet
 from sqlalchemy import or_, distinct
 from sqlalchemy.orm import load_only
 
@@ -17,8 +16,8 @@ from wexplorer.explorer.models import (
     Contract
 )
 from wexplorer.explorer.util import SimplePagination
-
-from wexplorer.explorer.forms import SearchBox, NewItemBox
+from wexplorer.explorer.forms import SearchBox, NewItemBox, FileUpload
+from wexplorer.data_update import update
 
 blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
@@ -39,6 +38,7 @@ def search():
     lower_bound = (page - 1) * 50
     upper_bound = lower_bound + 50
 
+    import pdb; pdb.set_trace()
     companies = db.session.execute(
         '''
         SELECT a.company_id, b.contract_id, a.company, b.description
@@ -48,7 +48,7 @@ def search():
         WHERE a.company ilike :search_for_wc
         OR b.description ilike :search_for_wc
         OR b.controller_number::VARCHAR = :search_for
-        OR b.spec_number ilike :search_for_wc
+        OR b.contract_number ilike :search_for_wc
         ORDER BY a.company, b.description
         ''',
         {
@@ -120,3 +120,24 @@ def contracts(contract_id):
         company=company,
         form=form
     )
+
+@blueprint.route('/upload_new', methods=['GET', 'POST'])
+def upload():
+    form = FileUpload()
+    if form.validate_on_submit():
+        _file = request.files.get('upload')
+        filename = secure_filename(_file.filename)
+        filepath = os.path.join(current_app.config.get('UPLOAD_FOLDER'), filename)
+        _file.save(filepath)
+        return render_template('explorer/upload_success.html', filepath=filepath)
+    else:
+        return render_template('explorer/upload_new.html', form=form)
+
+@blueprint.route('/_process_file', methods=['POST'])
+def process_upload():
+    filepath = request.form.get('filepath')
+    result = update(filepath)
+    if result.get('status') == 'success':
+        return jsonify(result), 200
+    else:
+        return jsonify(result), 403
