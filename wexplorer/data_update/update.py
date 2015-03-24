@@ -7,7 +7,7 @@ from wexplorer.app import db
 def update(target):
     try: 
         data = extract(target)
-        load(data)
+        load(data, db.engine.url)
 
         return { 'status': 'success' }
 
@@ -37,9 +37,17 @@ def extract(target):
     )
     return data.extract()
 
-def load(data):
+def load(data, db_url):
+    '''
+    db_url is a sqlalchemy url object
+    '''
+    user = db_url.username if db_url.username else ''
+    print db_url
     loader = PostgresLoader(
-        {'database': 'w_drive', 'user': 'bensmithgall', 'host': 'localhost'},
+        {
+            'database': db_url.database, 'user': user, 'host': db_url.host,
+            'port': db_url.port, 'password': db_url.password
+        },
         [{
             'table_name': 'contract',
             'to_relations': [],

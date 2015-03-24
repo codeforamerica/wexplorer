@@ -28,7 +28,7 @@ class DevConfig(Config):
     """Development configuration."""
     ENV = 'dev'
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL', 'postgresql://localhost/w_drive')  # TODO: Change me
+    SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL', 'postgresql://bensmithgall@localhost/w_drive')  # TODO: Change me
     DEBUG_TB_ENABLED = True  # Disable Debug toolbar
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 
