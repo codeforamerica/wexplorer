@@ -1,3 +1,4 @@
+import os
 import datetime
 
 from wextractor.extractors import ExcelExtractor
@@ -8,6 +9,11 @@ def update(target):
     try: 
         data = extract(target)
         load(data, db.engine.url)
+
+        try:
+            os.remove(target)
+        except OSError:
+            pass
 
         return { 'status': 'success' }
 
