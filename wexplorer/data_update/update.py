@@ -48,7 +48,7 @@ def load(data, db_url):
     db_url is a sqlalchemy url object
     '''
     user = db_url.username if db_url.username else ''
-    print db_url
+
     loader = PostgresLoader(
         {
             'database': db_url.database, 'user': user, 'host': db_url.host,

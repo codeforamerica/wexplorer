@@ -46,5 +46,3 @@ docs/_build
 node_modules
 *.css
 common.js
-
-uploads
