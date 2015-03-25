@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% import "macros.html" as macros %}
+
+{% block content %}
+
+<h2>Upload new data</h2>
+<form method="POST" action="{{ url_for('explorer.upload') }}" enctype="multipart/form-data">
+
+{{ form.csrf_token }}
+<div class="form-group">
+<label for="upload">Upload a file (must be .xls or .xlsx format)</label>
+{{ macros.with_errors(form.upload) }}
+</div>
+<div class="form-group">
+<label for="password">Enter the upload password:</label>
+{{ macros.with_errors(form.password) }}
+</div>
+
+<input type="submit" class="btn btn-success" value="Upload">
+</form>
+
+{% endblock %}

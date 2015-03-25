@@ -36,3 +36,8 @@ Flask-Cache>=0.13.1
 
 # Debug toolbar
 Flask-DebugToolbar==0.9.1
+
+# Data refresh
+wextractor==0.1.dev3
+Flask-Uploads==0.1.3
+
