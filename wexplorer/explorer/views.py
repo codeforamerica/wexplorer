@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 import os
 from werkzeug import secure_filename
 from flask import (
@@ -114,10 +115,35 @@ def contracts(contract_id):
         Contract.contract_id == contract_id
     ).first()
 
+    contract = company.contracts[0]
+    contract_href = None
+    if contract.contract_number and contract.type_of_contract.lower() == 'county':
+        # first try to convert it to an int
+        try:
+            _contract_number = int(float(contract.contract_number))
+            contract.contract_number = _contract_number
+        # if you can't, it has * or other characters, so just
+        # strip down to the digits
+        except ValueError:
+            if '**' in contract.contract_number:
+                _contract_number = int(re.sub(r'i?\D', '', contract.contract_number))
+            elif '*' in contract.contract_number:
+                _contract_number = None
+            elif 'i' in contract.contract_number:
+                _contract_number = contract.contract_number
+
+
+        # take the result and stick it into the well-formed county urls
+        contract_href = 'http://apps.county.allegheny.pa.us/BidsSearch/pdf/{number}.pdf'.format(
+            number=_contract_number
+        ) if _contract_number else None
+
     return render_template(
         'explorer/contracts.html',
         company=company,
-        form=form
+        contract=contract,
+        form=form,
+        contract_href=contract_href
     )
 
 @blueprint.route('/upload_new', methods=['GET', 'POST'])

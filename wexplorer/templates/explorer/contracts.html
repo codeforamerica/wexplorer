@@ -8,29 +8,43 @@
   </div>
 
   <div class="col-md-9">
-    <h3>Contract for {{ company.contracts[0].description|title }}</h3>
+    <h3>Contract for {{ contract.description|title }}</h3>
     <h5>Awarded to <a href="{{ url_for('explorer.companies', company_id=company.company_id) }}">{{ company.company|title }}</a></h5>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <p class="lead">
           Contract Identification
         </p>
         <ul>
-          {% if company.contracts[0].contract_number is not none %}
-          <li><strong>Contract Number: </strong>{{ company.contracts[0].contract_number }}</li>
+          {% if contract.type_of_contract is not none %}
+          <li>
+            <strong>Contract Type: </strong>
+              {% if contract.type_of_contract|lower == 'county' %}
+                {{ contract.type_of_contract }}
+                {% if contract_href %}: <a href="{{ contract_href }}" target="_blank">View Contract</a>{% endif %}
+              {% elif contract.type_of_contract|trim|lower == 'costars' %}
+                {{ contract.type_of_contract }} - 
+                Find COSTARS contracts on the state website <a href="http://www.costars.state.pa.us/SearchCOMember.aspx" target="_bank">here</a> and then click "Search Contracts" on the left.
+              {% else %}
+                {{ contract.type_of_contract }}
+              {% endif %}
+          </li>
           {% endif %}
-          {% if company.contracts[0].controller_number is not none %}
-          <li><strong>Controller Number: </strong>{{ company.contracts[0].controller_number }}</li>
+          {% if contract.contract_number is not none %}
+          <li><strong>Contract Number: </strong>{{ contract.contract_number }}</li>
           {% endif %}
-          {% if company.contracts[0].commcode is not none %}
-          <li><strong>Commcode: </strong>{{ company.contracts[0].commcode }}</li>
+          {% if contract.controller_number is not none %}
+          <li><strong>Controller Number: </strong>{{ contract.controller_number }}</li>
           {% endif %}
-          {% if company.contracts[0].expiration is not none %}
-          <li><strong>Expiration: </strong>{{ company.contracts[0].expiration.strftime('%Y-%m-%d') }}</li>
+          {% if contract.commcode is not none %}
+          <li><strong>Commcode: </strong>{{ contract.commcode }}</li>
           {% endif %}
-          {% if company.contracts[0].notes is not none %}
-          <li><strong>Notes: </strong>{{ company.contracts[0].notes }}</li>
+          {% if contract.expiration is not none %}
+          <li><strong>Expiration: </strong>{{ contract.expiration.strftime('%Y-%m-%d') }}</li>
+          {% endif %}
+          {% if contract.notes is not none %}
+          <li><strong>Notes: </strong>{{ contract.notes }}</li>
           {% endif %}
 
         </ul>
