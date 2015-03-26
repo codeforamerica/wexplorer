@@ -22,7 +22,7 @@
             <strong>Contract Type: </strong>
               {% if contract.type_of_contract|lower == 'county' %}
                 {{ contract.type_of_contract }}
-                {% if contract_href %}: <a href="{{ contract_href }}" target="_blank">View Contract</a>{% endif %}
+                {% if contract_href %} - <a href="{{ contract_href }}" target="_blank">View Contract</a>{% endif %}
               {% elif contract.type_of_contract|trim|lower == 'costars' %}
                 {{ contract.type_of_contract }} - 
                 Find COSTARS contracts on the state website <a href="http://www.costars.state.pa.us/SearchCOMember.aspx" target="_bank">here</a> and then click "Search Contracts" on the left.
