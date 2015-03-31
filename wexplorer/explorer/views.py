@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import re
 import os
 from werkzeug import secure_filename
@@ -144,6 +145,51 @@ def contracts(contract_id):
         contract=contract,
         form=form,
         contract_href=contract_href
+    )
+
+def decorate_expiration(expiration_date):
+    if (expiration_date - datetime.date.today()).days < 0:
+        return 'Expired on <br>{expires}'.format(expires=str(expiration_date)), 'way-expired'
+    elif (expiration_date - datetime.date.today()).days < 120:
+        return 'Expiring on <br>{expires}'.format(expires=str(expiration_date)), 'expiring-soon'
+    return str(expiration_date), 'none'
+
+@blueprint.route('/expiring')
+def expiring():
+    page = int(request.args.get('page', 1))
+    lower_bound = (page - 1) * 20
+    upper_bound = lower_bound + 20
+    results = []
+    contracts = db.session.execute(
+        '''
+        SELECT a.company_id, b.contract_id, a.company, b.description, b.expiration::DATE
+        FROM company a
+        INNER JOIN contract b
+        ON a.company_id = b.company_id
+        WHERE lower(b.type_of_contract) = 'county'
+        AND b.expiration::DATE < current_date + 180
+        ORDER BY expiration, a.company
+        '''
+    ).fetchall()
+
+    for contract in contracts[lower_bound:upper_bound]:
+        expiration_text, expiration_color = decorate_expiration(contract[4])
+        results.append({
+            'company_id': contract[0],
+            'contract_id': contract[1],
+            'name': contract[2],
+            'description': contract[3],
+            'expiration_color': expiration_color,
+            'expiration_text': expiration_text
+        })
+
+    pagination = SimplePagination(page, 20, len(contracts))
+
+    return render_template(
+        'explorer/expiring.html',
+        contracts=results,
+        form = SearchBox(request.form),
+        pagination=pagination
     )
 
 @blueprint.route('/upload_new', methods=['GET', 'POST'])
