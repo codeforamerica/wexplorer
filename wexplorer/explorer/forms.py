@@ -3,7 +3,7 @@
 from flask.ext.uploads import UploadSet
 from flask_wtf import Form
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import TextField, PasswordField, ValidationError
+from wtforms import TextField, PasswordField, ValidationError, BooleanField
 from wtforms.validators import DataRequired
 
 from wexplorer.extensions import bcrypt
@@ -11,6 +11,8 @@ from wexplorer.explorer.models import FileUploadPassword
 
 class SearchBox(Form):
     q = TextField('Search', validators=[DataRequired()])
+    expiring = BooleanField('Expiring Contracts')
+    expired = BooleanField('Expired Contracts')
 
     def __init__(self, *args, **kwargs):
         super(SearchBox, self).__init__(*args, **kwargs)
