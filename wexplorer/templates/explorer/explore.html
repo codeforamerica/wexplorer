@@ -23,6 +23,7 @@
         <tr>
           <th class="js-sortable-th">Company</th>
           <th class="js-sortable-th">Contract Discription</th>
+          <th class="js-sortable-th">Expiration Date</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +31,9 @@
         <tr>
           <td><a href="{{ url_for('explorer.companies', company_id=name.company_id) }}">{{ name.name|string|title }}</a></td>
           <td><a href="{{ url_for('explorer.contracts', contract_id=name.contract_id) }}">{{ name.description|string|title }}</a></td>
+          <td class="{{ name.expiration_color }}">
+            {{ name.expiration_text|safe }}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

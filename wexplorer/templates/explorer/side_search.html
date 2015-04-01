@@ -6,7 +6,32 @@
       {{ form.q(placeholder="I'm looking for...", class_="form-control") }}
     </div>
     <input class="btn btn-default btn-success" type="submit" value="Search">
-  </form>
+    <br><br>
+    <ul class="nav nav-sidebar">
 
-  {% include "shared/side_nav.html" %}
+      <li>
+        <label>Filter by:</label>
+        <div class="checkbox checkbox-group">
+          <label>
+            {% if expired %}
+            {{ form.expired(checked="checked") }}
+            {% else %}
+            {{ form.expired }}
+            {% endif %}
+            Expired Contracts
+          </label>
+        </div>
+        <div class="checkbox checkbox-group">
+          <label>
+            {% if expiring %}
+            {{ form.expiring(checked="checked") }}
+            {% else %}
+            {{ form.expiring }}
+            {% endif %}
+            Expiring Contracts
+          </label>
+        </div>
+      </li>
+    </ul>
+  </form>
 </div>

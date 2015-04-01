@@ -24,6 +24,13 @@ from wexplorer.data_update import update
 blueprint = Blueprint('explorer', __name__, url_prefix='/explore',
                       static_folder="../static")
 
+def decorate_expiration(expiration_date):
+    if (expiration_date - datetime.date.today()).days < 0:
+        return 'Expired on <br>{expires}'.format(expires=str(expiration_date)), 'way-expired'
+    elif (expiration_date - datetime.date.today()).days < 120:
+        return 'Expiring on <br>{expires}'.format(expires=str(expiration_date)), 'expiring-soon'
+    return str(expiration_date), 'none'
+
 @blueprint.route('/', methods=['GET', 'POST'])
 def search():
     '''
@@ -36,22 +43,37 @@ def search():
 
     results = []
     search_for = request.args.get('q')
+    expired = request.args.get('expired', False)
+    expiring = request.args.get('expiring', False)
     page = int(request.args.get('page', 1))
     lower_bound = (page - 1) * 50
     upper_bound = lower_bound + 50
 
-    companies = db.session.execute(
-        '''
-        SELECT a.company_id, b.contract_id, a.company, b.description
+    query = '''
+        SELECT a.company_id, b.contract_id, a.company, b.description, b.expiration::DATE
         FROM company a
         INNER JOIN contract b
         ON a.company_id = b.company_id
-        WHERE a.company ilike :search_for_wc
-        OR b.description ilike :search_for_wc
-        OR b.controller_number::VARCHAR = :search_for
-        OR b.contract_number ilike :search_for_wc
-        ORDER BY a.company, b.description
-        ''',
+        WHERE (
+            a.company ilike :search_for_wc
+            OR b.description ilike :search_for_wc
+            OR b.controller_number::VARCHAR = :search_for
+            OR b.contract_number ilike :search_for_wc
+        )
+        '''
+
+    if expiring and expired:
+        query += 'AND b.expiration < current_date + 120\n'
+    elif expiring and not expired:
+        query += 'AND b.expiration < current_date + 120 and b.expiration >= current_date\n'
+    elif expired and not expiring:
+        query += 'AND b.expiration < current_date\n'
+
+    query += 'ORDER BY a.company, b.description'
+
+    print query
+
+    companies = db.session.execute(query,   
         {
             'search_for_wc': '%' + str(search_for)   + '%',
             'search_for': search_for,
@@ -61,18 +83,22 @@ def search():
     pagination = SimplePagination(page, 50, len(companies))
 
     for company in companies[lower_bound:upper_bound]:
+        expiration_text, expiration_color = decorate_expiration(company[4])
         results.append({
             'company_id': company[0],
             'contract_id': company[1],
             'name': company[2],
-            'description': company[3]
+            'description': company[3],
+            'expiration_color': expiration_color,
+            'expiration_text': expiration_text,
         })
 
     if len(results) == 0:
         results = None
 
     return render_template(
-        'explorer/explore.html', form=form, names=results, pagination=pagination
+        'explorer/explore.html', form=form, names=results, pagination=pagination,
+        expiring=expiring, expired=expired
     )
 
 @blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])
@@ -145,51 +171,6 @@ def contracts(contract_id):
         contract=contract,
         form=form,
         contract_href=contract_href
-    )
-
-def decorate_expiration(expiration_date):
-    if (expiration_date - datetime.date.today()).days < 0:
-        return 'Expired on <br>{expires}'.format(expires=str(expiration_date)), 'way-expired'
-    elif (expiration_date - datetime.date.today()).days < 120:
-        return 'Expiring on <br>{expires}'.format(expires=str(expiration_date)), 'expiring-soon'
-    return str(expiration_date), 'none'
-
-@blueprint.route('/expiring')
-def expiring():
-    page = int(request.args.get('page', 1))
-    lower_bound = (page - 1) * 20
-    upper_bound = lower_bound + 20
-    results = []
-    contracts = db.session.execute(
-        '''
-        SELECT a.company_id, b.contract_id, a.company, b.description, b.expiration::DATE
-        FROM company a
-        INNER JOIN contract b
-        ON a.company_id = b.company_id
-        WHERE lower(b.type_of_contract) = 'county'
-        AND b.expiration::DATE < current_date + 180
-        ORDER BY expiration, a.company
-        '''
-    ).fetchall()
-
-    for contract in contracts[lower_bound:upper_bound]:
-        expiration_text, expiration_color = decorate_expiration(contract[4])
-        results.append({
-            'company_id': contract[0],
-            'contract_id': contract[1],
-            'name': contract[2],
-            'description': contract[3],
-            'expiration_color': expiration_color,
-            'expiration_text': expiration_text
-        })
-
-    pagination = SimplePagination(page, 20, len(contracts))
-
-    return render_template(
-        'explorer/expiring.html',
-        contracts=results,
-        form = SearchBox(request.form),
-        pagination=pagination
     )
 
 @blueprint.route('/upload_new', methods=['GET', 'POST'])
