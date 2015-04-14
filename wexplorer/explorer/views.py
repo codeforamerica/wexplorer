@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+import time
 import re
 import os
 from werkzeug import secure_filename
 from flask import (
     Blueprint, render_template, request,
-    redirect, url_for, current_app, jsonify
+    current_app, jsonify
 )
-from flask.ext.uploads import UploadSet
-from sqlalchemy import or_, distinct
 from sqlalchemy.orm import load_only
 
 from wexplorer.database import db
@@ -166,3 +165,15 @@ def process_upload():
         return jsonify(result), 200
     else:
         return jsonify(result), 403
+
+@blueprint.route('/_status')
+def check_status():
+    response = {}
+    response['status'] = 'ok'
+    try:
+        Contract.query.first()
+    except:
+        response['status'] = 'Database is unavailable'
+    response['updated'] = int(time.time())
+    response['dependencies'] = []
+    return jsonify(response)
