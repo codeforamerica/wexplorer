@@ -3,11 +3,9 @@
 from wexplorer.database import (
     Column,
     db,
-    Model,
-    relationship
+    Model
 )
 
-from sqlalchemy.dialects.postgresql import UUID
 from wexplorer.extensions import bcrypt
 
 class FileUploadPassword(Model):
@@ -19,6 +17,13 @@ class FileUploadPassword(Model):
             self.password = bcrypt.generate_password_hash(password)
         else:
             raise Exception('File Upload Password must be supplied')
+
+class LastUpdated(Model):
+    __tablename__ = 'last_updated'
+    last_updated = Column(db.DateTime, primary_key=True)
+
+    def __init__(self, last_updated):
+        self.last_updated = last_updated
 
 class Company(Model):
     __tablename__ = 'company'
