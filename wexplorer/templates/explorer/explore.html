@@ -16,7 +16,8 @@
   <div class="col-md-9">
     <h3 class="text-muted">
       {{ pagination.total_count }} results found for "{{ request.args.get('q') }}"
-      {% if pagination.pages > 1 %}({{ (names | length) }} shown){% endif %}
+      {% if pagination.pages > 1 %}({{ (names | length) }} shown) {% endif %}<br>
+      {% if last_updated %}<small>Last Updated: {% if last_updated %}{{ last_updated }}{% endif %}</small>{% endif %}
     </h3>
     <table class="table table-condensed" id="js-explore-search-results">
       <thead>

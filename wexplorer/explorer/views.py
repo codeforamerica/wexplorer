@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import time
 import re
 import os
@@ -11,9 +12,7 @@ from sqlalchemy.orm import load_only
 
 from wexplorer.database import db
 from wexplorer.explorer.models import (
-    Company,
-    CompanyContact,
-    Contract
+    Company, CompanyContact, Contract, LastUpdated
 )
 from wexplorer.explorer.util import SimplePagination
 from wexplorer.explorer.forms import SearchBox, NewItemBox, FileUpload
@@ -69,8 +68,14 @@ def search():
     if len(results) == 0:
         results = None
 
+    updated = LastUpdated.query.first()
+    if updated:
+        last_updated = datetime.datetime.strftime(LastUpdated.query.first().last_updated, '%b %d %Y at %I:%M %p')
+    else:
+        last_updated = None
+
     return render_template(
-        'explorer/explore.html', form=form, names=results, pagination=pagination
+        'explorer/explore.html', form=form, names=results, pagination=pagination, last_updated=last_updated
     )
 
 @blueprint.route('/companies/<company_id>', methods=['GET', 'POST'])
@@ -162,6 +167,8 @@ def process_upload():
     filepath = request.form.get('filepath')
     result = update(filepath)
     if result.get('status') == 'success':
+        db.session.add(LastUpdated(datetime.datetime.now()))
+        db.session.commit()
         return jsonify(result), 200
     else:
         return jsonify(result), 403
