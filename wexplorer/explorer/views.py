@@ -70,7 +70,9 @@ def search():
 
     updated = LastUpdated.query.first()
     if updated:
-        last_updated = datetime.datetime.strftime(LastUpdated.query.first().last_updated, '%b %d %Y at %I:%M %p')
+        last_updated = datetime.datetime.strftime(
+            LastUpdated.query.first().last_updated, '%b %d %Y'
+        )
     else:
         last_updated = None
 
@@ -167,7 +169,12 @@ def process_upload():
     filepath = request.form.get('filepath')
     result = update(filepath)
     if result.get('status') == 'success':
-        db.session.add(LastUpdated(datetime.datetime.now()))
+        last_updated = LastUpdated.query.first()
+        if not last_updated:
+            last_updated = LastUpdated(datetime.datetime.utcnow())
+            db.session.add(last_updated)
+        else:
+            last_updated.last_updated = datetime.datetime.utcnow()
         db.session.commit()
         return jsonify(result), 200
     else:

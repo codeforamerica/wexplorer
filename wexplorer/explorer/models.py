@@ -58,7 +58,6 @@ class Contract(Model):
     pa = Column(db.String(255))
     expiration = Column(db.DateTime)
     contract_number = Column(db.String(255))
-    contract_sub_number = Column(db.Integer)
     controller_number = Column(db.Integer)
     commcode = Column(db.Integer)
     company_id = Column(db.String(32), db.ForeignKey('company.company_id'))
