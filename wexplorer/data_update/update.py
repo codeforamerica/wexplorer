@@ -6,7 +6,7 @@ from wextractor.loaders import PostgresLoader
 from wexplorer.app import db
 
 def update(target):
-    try: 
+    try:
         data = extract(target)
         load(data, db.engine.url)
 
@@ -30,14 +30,14 @@ def extract(target):
     data = ExcelExtractor(
         target,
         header=[
-            'type_of_contract', 'contract_number', 'contract_sub_number', 'pa', 'company',
+            'type_of_contract', 'contract_number', 'pa', 'company',
             'description', 'expiration', 'controller_number', 'address_1',
             'address_2', 'email', 'contact_name', 'phone_number', 'fax_number',
             'notes'
         ],
         dtypes=[
-            strip_nbsp, strip_nbsp, int, strip_nbsp, strip_nbsp, strip_nbsp,
-            datetime.datetime, int, strip_nbsp, strip_nbsp, 
+            strip_nbsp, strip_nbsp, strip_nbsp, strip_nbsp, strip_nbsp,
+            datetime.datetime, int, strip_nbsp, strip_nbsp,
             strip_nbsp, strip_nbsp, strip_nbsp, strip_nbsp, strip_nbsp
         ]
     )
@@ -67,9 +67,9 @@ def load(data, db_url):
                 ('pa', 'VARCHAR(255)'),
                 ('expiration', 'TIMESTAMP'),
                 ('contract_number', 'VARCHAR(255)'),
-                ('contract_sub_number', 'INTEGER'),
                 ('controller_number', 'INTEGER'),
-                ('commcode', 'INTEGER')
+                ('commcode', 'INTEGER'),
+                ('company', 'VARCHAR(255)')
             )
         },
         {
