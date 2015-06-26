@@ -1,3 +1,5 @@
+Wexplorer has been folded into the [Pittsburgh Purchasing Suite](https://github.com/codeforamerica/pittsburgh-purchasing-suite) and is no longer being maintained.
+
 W:/Explorer
 ---
 
