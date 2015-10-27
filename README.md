@@ -1,6 +1,8 @@
 W:/Explorer
 ---
 
+**NOTE: Wexplorer has been deprecated in favor of the [pittsburgh-purchasing-suite](https://github.com/codeforamerica/pittsburgh-purchasing-suite)'s Scout tool. This app now redirects to https://www.buildpgh.com**
+
 W-Drive Online
 
 W:/Explorer (or just wexplorer) is [Team Pittsburgh's](http://www.codeforamerica.org/governments/pittsburgh/) digitization effort of a list of City of Pittsburgh contracts that started out as an Excel spreadsheet on the City's shared W-Drive.

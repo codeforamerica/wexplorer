@@ -14,6 +14,7 @@ from wexplorer.extensions import (
 )
 from wexplorer.utils import url_for_other_page
 from wexplorer import shared, user, explorer
+from wexplorer.redirect import blueprint as redirect_bp
 
 def create_app(config_object=DevConfig):
     '''An application factory, as explained here:
@@ -40,8 +41,9 @@ def register_extensions(app):
     return None
 
 def register_blueprints(app):
-    app.register_blueprint(shared.views.blueprint)
-    app.register_blueprint(explorer.views.blueprint)
+    # app.register_blueprint(shared.views.blueprint)
+    # app.register_blueprint(explorer.views.blueprint)
+    app.register_blueprint(redirect_bp)
     return None
 
 def register_errorhandlers(app):
