@@ -15,6 +15,7 @@ class Config(object):
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     UPLOAD_PASSWORD = os_env.get('UPLOAD_PASSWORD', 'upload') # TOOO: Change me
     UPLOAD_FOLDER = os.path.join(HERE, os_env.get('UPLOAD_FOLDER', 'uploads/'))
+    REDIRECT_TO_HERE = 'https://www.buildpgh.com'
 
 class ProdConfig(Config):
     """Production configuration."""
@@ -23,7 +24,6 @@ class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL')
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
-
 class DevConfig(Config):
     """Development configuration."""
     ENV = 'dev'
@@ -31,7 +31,6 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL', 'postgresql://bensmithgall@localhost/w_drive')  # TODO: Change me
     DEBUG_TB_ENABLED = True  # Disable Debug toolbar
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
-
 
 class TestConfig(Config):
     TESTING = True
